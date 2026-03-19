@@ -12,7 +12,7 @@ public class SoundBullet : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        meshRenderer = GetComponent<Renderer>();
+        meshRenderer = GetComponentInChildren<Renderer>();
 
         // Destroy this bullet after 4 seconds to save memory
         Destroy(gameObject, lifetime);

@@ -49,4 +49,12 @@ public class PlayerMovement : MonoBehaviour
         // Apply basic gravity so the player stays on the floor
         controller.Move(new Vector3(0, -9.81f, 0) * Time.deltaTime);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Exit"))
+        {
+            Debug.Log("VICTORY!");
+        }
+    }
 }
