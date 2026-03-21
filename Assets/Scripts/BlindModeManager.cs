@@ -11,6 +11,8 @@ public class BlindModeManager : MonoBehaviour
         // Get the saved choice from the Main Menu. 
         // The '0' at the end is a fallback default just in case nothing was saved.
         int isBlindMode = PlayerPrefs.GetInt("BlindMode", 0);
+        GameObject overlayObject = GameObject.Find("BlackOverlay");
+        blackOverlay = overlayObject.GetComponent<Image>();
 
         // If the player chose Blind Mode (1), turn the black screen on. 
         // Otherwise, turn it off.

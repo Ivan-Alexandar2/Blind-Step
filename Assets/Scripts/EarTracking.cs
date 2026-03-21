@@ -6,6 +6,11 @@ public class EarTracking : MonoBehaviour
 
     // We use LateUpdate instead of Update so the camera/player moves FIRST, 
     // and the ears follow perfectly without jittering.
+
+    private void Start()
+    {
+        targetPlayer = FindObjectOfType<PlayerMovement>().transform;
+    }
     void LateUpdate()
     {
         if (targetPlayer != null)
