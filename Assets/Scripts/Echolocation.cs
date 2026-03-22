@@ -19,17 +19,17 @@ public class Echolocation : MonoBehaviour
     {
         pulseTimer -= Time.deltaTime;
 
-        bool isMoving = Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0;
-        bool isSprinting = Input.GetKey(KeyCode.LeftShift);
+        //bool isMoving = Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0;
+        //bool isSprinting = Input.GetKey(KeyCode.LeftShift);
 
-        if (pulseTimer <= 0f && isMoving)
-        {
-            FirePulse();
-            pulseTimer = isSprinting ? sprintPulseRate : walkPulseRate;
-        }
+        //if (pulseTimer <= 0f && isMoving)
+        //{
+        //    FirePulse();
+        //    pulseTimer = isSprinting ? sprintPulseRate : walkPulseRate;
+        //}
     }
 
-    private void FirePulse()
+    public void FirePulse()
     {
         if (footstepSource != null && footstepClips.Length > 0)
         {

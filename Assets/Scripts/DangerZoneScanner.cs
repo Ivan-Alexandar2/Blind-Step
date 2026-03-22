@@ -25,8 +25,9 @@ public class DangerZoneScanner : MonoBehaviour
     public AudioSource ambience;
     private float baseAmbienceVolume;
 
-    private bool isDead;
+    internal bool isDead;
     private CinemachineImpulseSource impulseSource;
+    private Animator animator;
     // A tiny custom container to hold the math for each wall we find
     private struct WallData
     {
@@ -45,6 +46,7 @@ public class DangerZoneScanner : MonoBehaviour
         GameObject ambienceObject = GameObject.Find("GameManager");
         ambience = ambienceObject.GetComponent<AudioSource>();
         impulseSource = GetComponent<CinemachineImpulseSource>();
+        animator = GetComponentInChildren<Animator>();
 
         if (ambience != null) baseAmbienceVolume = ambience.volume;
 
@@ -149,7 +151,6 @@ public class DangerZoneScanner : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("Player touched the wall! Restarting...");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -157,6 +158,8 @@ public class DangerZoneScanner : MonoBehaviour
     {
         deathSource.PlayOneShot(deathClip);
         impulseSource.GenerateImpulse();
+
+        animator.SetTrigger("Die");
         yield return new WaitForSeconds(0.4f);  
         Die();
     }

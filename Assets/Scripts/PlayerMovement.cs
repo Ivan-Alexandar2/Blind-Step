@@ -10,15 +10,23 @@ public class PlayerMovement : MonoBehaviour
 
     private CharacterController controller;
     private Vector3 moveDirection;
+    private Animator animator;
+    private float currentAnimSpeed = 0f;
 
+    private DangerZoneScanner zoneScanner;
     void Start()
     {
+        zoneScanner = FindObjectOfType<DangerZoneScanner>();
         controller = GetComponent<CharacterController>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
     {
-        MovePlayer();
+        if(!zoneScanner.isDead)
+        {
+            MovePlayer();
+        }    
     }
 
     private void MovePlayer()
@@ -29,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
 
         // 2. Determine if we are sprinting (holding Left Shift)
         float currentSpeed = Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed;
+        float targetSpeed = 0f;
 
         // 3. Calculate direction
         moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
@@ -44,6 +53,14 @@ public class PlayerMovement : MonoBehaviour
 
             // Move the player using the CharacterController
             controller.Move(moveDirection * currentSpeed * Time.deltaTime);
+
+            currentAnimSpeed = Mathf.Lerp(currentAnimSpeed, targetSpeed, Time.deltaTime * 10f);
+
+            animator.SetFloat("Speed", currentAnimSpeed);
+        }
+        else
+        {
+            animator.SetFloat("Speed", 0f);
         }
 
         // Apply basic gravity so the player stays on the floor
