@@ -19,6 +19,15 @@ public class PlayerMovement : MonoBehaviour
         zoneScanner = FindObjectOfType<DangerZoneScanner>();
         controller = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
+
+        if (animator == null)
+        {
+            Debug.LogError(" CRITICAL ERROR: I could not find an Animator in the children! The animations will not play.");
+        }
+        else
+        {
+            Debug.Log(" SUCCESS: I found the Animator attached to: " + animator.gameObject.name);
+        }
     }
 
     void Update()
@@ -31,39 +40,37 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
-        // 1. Get input from WASD or Arrow Keys
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
-        // 2. Determine if we are sprinting (holding Left Shift)
-        float currentSpeed = Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed;
+        // Start by assuming we aren't moving
         float targetSpeed = 0f;
 
-        // 3. Calculate direction
         moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
 
-        // 4. Move the player if there is input
         if (moveDirection.magnitude >= 0.1f)
         {
-            // Calculate the rotation we need to face the direction we are moving
-            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            // We ARE moving! Update the targetSpeed to walk or sprint
+            targetSpeed = Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed;
 
-            // Smoothly rotate the player
+            // Handle Rotation
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-            // Move the player using the CharacterController
-            controller.Move(moveDirection * currentSpeed * Time.deltaTime);
+            // Handle Physical Movement
+            controller.Move(moveDirection * targetSpeed * Time.deltaTime);
+        }
 
-            currentAnimSpeed = Mathf.Lerp(currentAnimSpeed, targetSpeed, Time.deltaTime * 10f);
+        // Smoothly glide the animation speed toward whatever targetSpeed is (5, 8, or 0)
+        currentAnimSpeed = Mathf.Lerp(currentAnimSpeed, targetSpeed, Time.deltaTime * 10f);
 
+        // Send the smoothed number to the Animator!
+        if (animator != null)
+        {
             animator.SetFloat("Speed", currentAnimSpeed);
         }
-        else
-        {
-            animator.SetFloat("Speed", 0f);
-        }
 
-        // Apply basic gravity so the player stays on the floor
+        // Apply Gravity
         controller.Move(new Vector3(0, -9.81f, 0) * Time.deltaTime);
     }
 

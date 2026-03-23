@@ -28,6 +28,10 @@ public class DangerZoneScanner : MonoBehaviour
     internal bool isDead;
     private CinemachineImpulseSource impulseSource;
     private Animator animator;
+
+    public float X;
+    public float Y;
+    public float Z;
     // A tiny custom container to hold the math for each wall we find
     private struct WallData
     {
@@ -159,7 +163,10 @@ public class DangerZoneScanner : MonoBehaviour
         deathSource.PlayOneShot(deathClip);
         impulseSource.GenerateImpulse();
 
+        // rotate the wrong animation
+        animator.transform.localRotation = Quaternion.Euler(X, Y, Z);
         animator.SetTrigger("Die");
+
         yield return new WaitForSeconds(0.4f);  
         Die();
     }

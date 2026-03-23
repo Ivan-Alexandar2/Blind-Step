@@ -17,7 +17,7 @@ public class Echolocation : MonoBehaviour
 
     void Update()
     {
-        pulseTimer -= Time.deltaTime;
+        //pulseTimer -= Time.deltaTime;
 
         //bool isMoving = Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0;
         //bool isSprinting = Input.GetKey(KeyCode.LeftShift);
