@@ -12,6 +12,9 @@ public class MainMenuManager : MonoBehaviour
     private void Start()
     {
         fadeImage.gameObject.SetActive(false);
+
+        GameObject pressBtnAudio = GameObject.Find("ButtonAudio");
+        pressButtonAudio = pressBtnAudio.GetComponent<AudioSource>();
     }
     private void Update()
     {

@@ -64,6 +64,11 @@ public class PlayerMovement : MonoBehaviour
         // Smoothly glide the animation speed toward whatever targetSpeed is (5, 8, or 0)
         currentAnimSpeed = Mathf.Lerp(currentAnimSpeed, targetSpeed, Time.deltaTime * 10f);
 
+        if (currentAnimSpeed < 0.05f)
+        {
+            currentAnimSpeed = 0f;
+        }
+
         // Send the smoothed number to the Animator!
         if (animator != null)
         {

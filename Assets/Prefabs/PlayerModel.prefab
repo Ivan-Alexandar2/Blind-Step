@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Echolocation
   bulletPrefab: {fileID: 1899892072156520215, guid: 8d45c2a227c3a994794b7244d6cd8be4, type: 3}
-  numberOfBullets: 8
+  numberOfStepBullets: 8
   walkPulseRate: 0.6
   sprintPulseRate: 0.25
   footstepSource: {fileID: 6424695080213831418}
@@ -100,6 +100,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8bd09751474ef8147994f58caedaeff3, type: 3}
   - {fileID: 8300000, guid: 3d9b4483e890cb84f82c581a069ee798, type: 3}
   - {fileID: 8300000, guid: 7a0a6654bd65a124ea688bf586f857c7, type: 3}
+  clappingClips: {fileID: 0}
+  numberOfClapBullets: 20
+  clapCooldown: 0
 --- !u!114 &2828208357836855748
 MonoBehaviour:
   m_ObjectHideFlags: 0

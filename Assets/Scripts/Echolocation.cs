@@ -4,8 +4,8 @@ public class Echolocation : MonoBehaviour
 {
     [Header("Echolocation Settings")]
     public GameObject bulletPrefab;
-    public int numberOfBullets = 8;
-
+    public int numberOfStepBullets;
+    
     [Header("Pulse Timings")]
     public float walkPulseRate = 0.6f;
     public float sprintPulseRate = 0.25f;
@@ -14,9 +14,24 @@ public class Echolocation : MonoBehaviour
     [Header("Audio")]
     public AudioSource footstepSource;
     public AudioClip[] footstepClips;
+    public AudioClip clappingClips;
+
+    [Header("Clapping")]
+    public int numberOfClapBullets;
+    public float clapCooldown;
 
     void Update()
     {
+        if(clapCooldown <= 3 && clapCooldown >= 0)
+        {
+            clapCooldown -= Time.deltaTime;
+        }      
+
+        if(Input.GetKeyDown(KeyCode.Q) && clapCooldown <= 0)
+        {
+            FireClapPulse();
+            clapCooldown = 3;
+        }
         //pulseTimer -= Time.deltaTime;
 
         //bool isMoving = Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0;
@@ -41,9 +56,24 @@ public class Echolocation : MonoBehaviour
         }
 
         // 2. Fire the echolocation bullets
-        float angleStep = 360f / numberOfBullets;
+        float angleStep = 360f / numberOfStepBullets;
 
-        for (int i = 0; i < numberOfBullets; i++)
+        for (int i = 0; i < numberOfStepBullets; i++)
+        {
+            float currentAngle = i * angleStep;
+            Quaternion rotation = Quaternion.Euler(0f, currentAngle, 0f);
+            Instantiate(bulletPrefab, transform.position, rotation);
+        }
+    }
+
+    public void FireClapPulse()
+    {
+        footstepSource.PlayOneShot(clappingClips);
+
+        // 2. Fire the echolocation bullets
+        float angleStep = 360f / numberOfClapBullets;
+
+        for (int i = 0; i < numberOfClapBullets; i++)
         {
             float currentAngle = i * angleStep;
             Quaternion rotation = Quaternion.Euler(0f, currentAngle, 0f);

@@ -7,7 +7,6 @@ public class FootstepTrigger : MonoBehaviour
     // The animation timeline will call this exact function!
     public void FireFootstep()
     {
-        Debug.Log("AAAAAAAA");
         if (echolocationScript != null)
         {
             echolocationScript.FirePulse();

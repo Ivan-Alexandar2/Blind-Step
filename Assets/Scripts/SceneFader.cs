@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,59 +10,69 @@ public class SceneFader : MonoBehaviour
     public Image fadeImage;
 
     [Header("Settings")]
-    public float fadeSpeed = 0.5f; // Higher number = faster fade
+    public float fadeSpeed = 3f;
 
     void Start()
     {
         GameObject fadeImageObject = GameObject.Find("FadingImage");
-        fadeImage = fadeImageObject.GetComponent<Image>();
-        // Every time a scene loads with this script, it automatically fades IN
+        if (fadeImageObject != null) fadeImage = fadeImageObject.GetComponent<Image>();
+
         StartCoroutine(FadeIn());
     }
 
-    // This is the public function your buttons will call
+    // Call this for Restart or Next Level
     public void FadeToScene(int sceneIndex)
     {
-        StartCoroutine(FadeOutAndLoad(sceneIndex));
+        // We pass the "LoadScene" command as a callback
+        StartCoroutine(FadeOut(() => SceneManager.LoadScene(sceneIndex)));
     }
 
-    // --- THE COROUTINE FORMULAS ---
+    // Call this for Quitting
+    public void FadeToQuit()
+    {
+        // We pass the "Quit" command as a callback
+        StartCoroutine(FadeOut(() => Application.Quit()));
+    }
+
+    // --- THE COROUTINES ---
 
     private IEnumerator FadeIn()
     {
-        // 1. Start completely black
         Color fadeColor = fadeImage.color;
-        fadeColor.a = 1f; // 'a' stands for Alpha (1 is solid, 0 is invisible)
+        fadeColor.a = 1f;
         fadeImage.color = fadeColor;
 
-        // 2. Slowly subtract from the Alpha until it reaches 0
         while (fadeImage.color.a > 0f)
         {
-            fadeColor.a -= Time.deltaTime * fadeSpeed;
-            fadeImage.color = fadeColor;
-            yield return null; // "Wait for the next frame before looping again"
-        }
-
-        // 3. Turn off the raycast shield so the player can click things again
-        fadeImage.raycastTarget = false;
-    }
-
-    private IEnumerator FadeOutAndLoad(int sceneIndex)
-    {
-        // 1. Turn on the raycast shield so they can't click other buttons
-        fadeImage.raycastTarget = true;
-
-        Color fadeColor = fadeImage.color;
-
-        // 2. Slowly add to the Alpha until it reaches 1 (completely black)
-        while (fadeImage.color.a < 1f)
-        {
-            fadeColor.a += Time.deltaTime * fadeSpeed;
+            // USING UNSCALED TIME so it works even when Time.timeScale is 0!
+            fadeColor.a -= Time.unscaledDeltaTime * fadeSpeed;
             fadeImage.color = fadeColor;
             yield return null;
         }
 
-        // 3. The screen is now 100% black. Load the next scene!
-        SceneManager.LoadScene(sceneIndex);
+        fadeImage.raycastTarget = false;
     }
+
+    // Notice the 'Action onComplete' parameter
+    private IEnumerator FadeOut(Action onComplete)
+    {
+        fadeImage.raycastTarget = true;
+        Color fadeColor = fadeImage.color;
+
+        while (fadeImage.color.a < 1f)
+        {
+            // USING UNSCALED TIME
+            fadeColor.a += Time.unscaledDeltaTime * fadeSpeed;
+            fadeImage.color = fadeColor;
+            yield return null;
+        }
+
+        // Unfreeze the game right before we load the new scene or quit
+        Time.timeScale = 1f;
+
+        // Execute whatever action we passed in!
+        onComplete?.Invoke();
+    }
+
+    void AAAAAA() { }
 }
