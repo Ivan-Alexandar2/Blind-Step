@@ -8,13 +8,16 @@ public class MainMenuManager : MonoBehaviour
     public AudioSource pressButtonAudio;
     public Image fadeImage;
     public float fadeSpeed = 1f;
+    public SceneFader sceneFader;
+
+    [Header("Headphones screen")]
+    public Image headphones;
 
     private void Start()
     {
-        fadeImage.gameObject.SetActive(false);
-
         GameObject pressBtnAudio = GameObject.Find("ButtonAudio");
         pressButtonAudio = pressBtnAudio.GetComponent<AudioSource>();
+        sceneFader = FindObjectOfType<SceneFader>();
     }
     private void Update()
     {
@@ -29,24 +32,24 @@ public class MainMenuManager : MonoBehaviour
     }
     public void StartClassicMode()
     {
-        StartCoroutine(PlayCoroutine());
+        pressButtonAudio.Play();
+        PlayerPrefs.SetInt("BlindMode", 0);
+        PlayerPrefs.Save();
+        sceneFader.FadeToScene(2);
     }
 
     // This will be triggered by the Blind Mode button
     public void StartBlindMode()
     {
         // Save the choice as 1 (Blind)
+        pressButtonAudio.Play();
         PlayerPrefs.SetInt("BlindMode", 1);
         PlayerPrefs.Save();
-
-        // Load the same level!
-        SceneManager.LoadScene(1);
+        sceneFader.FadeToScene(2);
     }
 
     public IEnumerator PlayCoroutine()
-    {
-        pressButtonAudio.Play();
-
+    {      
         // 1. Turn on the raycast shield so they can't click other buttons
         fadeImage.gameObject.SetActive(true);
         fadeImage.raycastTarget = true;
@@ -68,6 +71,6 @@ public class MainMenuManager : MonoBehaviour
         PlayerPrefs.Save();
 
         // Load the Tutorial or First Level (Scene index 1)
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 }

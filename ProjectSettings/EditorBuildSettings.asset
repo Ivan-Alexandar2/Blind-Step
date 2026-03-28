@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/HeadphonesScene.unity
+    guid: c757c73a88224cc49a1fefbf7a638717
+  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 20f559427e2219649b2d1de90f777827
   - enabled: 1

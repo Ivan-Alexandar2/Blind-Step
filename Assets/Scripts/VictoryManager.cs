@@ -8,8 +8,7 @@ public class VictoryManager : MonoBehaviour
 
     [Header("Audio")]
     public AudioSource victoryAudioSource;
-    public AudioClip victoryVoiceLine;
-    public AudioClip victorySoundEffect;
+    public Narrator narrator;
 
     public SceneFader sceneFader;
     public AudioSource buttonPressAudio;
@@ -19,36 +18,45 @@ public class VictoryManager : MonoBehaviour
         victoryPanel = GameObject.Find("VictoryPanel");
         if (victoryPanel != null) victoryPanel.SetActive(false);
 
-        victoryAudioSource = GetComponent<AudioSource>();
         sceneFader = FindObjectOfType<SceneFader>();
 
         GameObject pressBtnAudio = GameObject.Find("ButtonAudio");
         buttonPressAudio = pressBtnAudio.GetComponent<AudioSource>();
+        narrator = FindObjectOfType<Narrator>();
+    }
+
+    private void Update()
+    {
+        if(victoryPanel.active)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+                LoadNextLevel();
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+                RestartLevel();
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+                QuitGame();
+        }     
     }
 
     public void TriggerVictory()
     {
         if (victoryPanel != null) victoryPanel.SetActive(true);
 
-        if (victoryAudioSource != null)
-        {
-            victoryAudioSource.PlayOneShot(victorySoundEffect);
-            victoryAudioSource.PlayOneShot(victoryVoiceLine);
-        }
+        victoryAudioSource.Play();
+        narrator.narratorAudioSource.Stop();
+        narrator.narratorAudioSource.PlayOneShot(narrator.winClip);
 
         Time.timeScale = 0f;
     }
 
     public void LoadNextLevel()
     {
-        // Tell the Fader to load the next index in the Build Settings
         buttonPressAudio.Play();
         if (sceneFader != null) sceneFader.FadeToScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void RestartLevel()
     {
-        // Tell the Fader to load the CURRENT index
         buttonPressAudio.Play();
         if (sceneFader != null) sceneFader.FadeToScene(SceneManager.GetActiveScene().buildIndex);
     }
@@ -57,7 +65,6 @@ public class VictoryManager : MonoBehaviour
     {
         Debug.Log("Quitting Game...");
         buttonPressAudio.Play();
-        // Tell the Fader to trigger the Application.Quit callback
         if (sceneFader != null) sceneFader.FadeToQuit();
     }
 }

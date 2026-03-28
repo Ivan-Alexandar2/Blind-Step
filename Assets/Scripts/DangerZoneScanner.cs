@@ -151,7 +151,7 @@ public class DangerZoneScanner : MonoBehaviour
                 ambience.volume = baseAmbienceVolume;
             }
         }
-    }
+    }  
 
     private void Die()
     {

@@ -14,7 +14,7 @@ public class Echolocation : MonoBehaviour
     [Header("Audio")]
     public AudioSource footstepSource;
     public AudioClip[] footstepClips;
-    public AudioClip clappingClips;
+    public AudioClip[] clappingClips;
 
     [Header("Clapping")]
     public int numberOfClapBullets;
@@ -68,7 +68,8 @@ public class Echolocation : MonoBehaviour
 
     public void FireClapPulse()
     {
-        footstepSource.PlayOneShot(clappingClips);
+        int randomClap = Random.Range(0, clappingClips.Length);
+        footstepSource.PlayOneShot(clappingClips[randomClap]);
 
         // 2. Fire the echolocation bullets
         float angleStep = 360f / numberOfClapBullets;

@@ -19,15 +19,6 @@ public class PlayerMovement : MonoBehaviour
         zoneScanner = FindObjectOfType<DangerZoneScanner>();
         controller = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
-
-        if (animator == null)
-        {
-            Debug.LogError(" CRITICAL ERROR: I could not find an Animator in the children! The animations will not play.");
-        }
-        else
-        {
-            Debug.Log(" SUCCESS: I found the Animator attached to: " + animator.gameObject.name);
-        }
     }
 
     void Update()
@@ -77,13 +68,5 @@ public class PlayerMovement : MonoBehaviour
 
         // Apply Gravity
         controller.Move(new Vector3(0, -9.81f, 0) * Time.deltaTime);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Exit"))
-        {
-            Debug.Log("VICTORY!");
-        }
     }
 }

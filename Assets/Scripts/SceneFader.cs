@@ -73,6 +73,4 @@ public class SceneFader : MonoBehaviour
         // Execute whatever action we passed in!
         onComplete?.Invoke();
     }
-
-    void AAAAAA() { }
 }

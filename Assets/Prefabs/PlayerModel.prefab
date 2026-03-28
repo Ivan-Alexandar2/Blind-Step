@@ -100,7 +100,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8bd09751474ef8147994f58caedaeff3, type: 3}
   - {fileID: 8300000, guid: 3d9b4483e890cb84f82c581a069ee798, type: 3}
   - {fileID: 8300000, guid: 7a0a6654bd65a124ea688bf586f857c7, type: 3}
-  clappingClips: {fileID: 0}
+  clappingClips:
+  - {fileID: 8300000, guid: 62c50892d46b5a3418523be0251d5b9a, type: 3}
+  - {fileID: 8300000, guid: e63b1d48916a7bc459db0d94798aead5, type: 3}
+  - {fileID: 8300000, guid: e198c13c6e7308e4a9c074d6fef3c85d, type: 3}
   numberOfClapBullets: 20
   clapCooldown: 0
 --- !u!114 &2828208357836855748
