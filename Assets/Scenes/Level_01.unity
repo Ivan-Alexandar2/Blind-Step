@@ -527,10 +527,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c3a396210d2ccb4c947138a5a774be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Narrator
-  dangerZoneScanner: {fileID: 0}
   narratorAudioSource: {fileID: 0}
+  dangerZoneScanner: {fileID: 0}
   wallWarningClip: {fileID: 0}
   winClip: {fileID: 8300000, guid: 961473c74addf644985c495b78a9925b, type: 3}
+  narratorToggleOnClip: {fileID: 0}
+  narratorToggleOffClip: {fileID: 0}
 --- !u!1 &69485683
 GameObject:
   m_ObjectHideFlags: 0
@@ -1158,7 +1160,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7ab84649cdba0a34aa08d9d249793bd9, type: 2}
+  - {fileID: 2100000, guid: e1808dc9cd697e847aa22b2977b44a2c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

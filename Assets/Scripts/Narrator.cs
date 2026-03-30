@@ -14,7 +14,7 @@ public class Narrator : MonoBehaviour
     public AudioClip narratorToggleOnClip;
     public AudioClip narratorToggleOffClip;
 
-    private bool isNarratorEnabled = true;
+    internal bool isNarratorEnabled = true;
     private bool hasPlayedWarningClip;
 
     void Awake()
@@ -25,22 +25,18 @@ public class Narrator : MonoBehaviour
 
     void Start()
     {
-        // Load the saved preference (1 = true, 0 = false)
         isNarratorEnabled = PlayerPrefs.GetInt("NarratorEnabled", 1) == 1;
-
         if (narratorAudioSource == null) narratorAudioSource = GetComponent<AudioSource>();
         if (dangerZoneScanner == null) dangerZoneScanner = FindObjectOfType<DangerZoneScanner>();
     }
 
     void Update()
     {
-        // Consistent Narrator On/Off Toggle (Let's use 'N' for Narrator)
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.N))
         {
             ToggleNarrator();
         }
 
-        // Wall Warning logic
         if (dangerZoneScanner != null && dangerZoneScanner.dangerEmitters.Length > 0)
         {
             if (dangerZoneScanner.dangerEmitters[0].volume >= 0.3f && !hasPlayedWarningClip)
@@ -54,13 +50,15 @@ public class Narrator : MonoBehaviour
     public void ToggleNarrator()
     {
         isNarratorEnabled = !isNarratorEnabled;
-
         PlayerPrefs.SetInt("NarratorEnabled", isNarratorEnabled ? 1 : 0);
         PlayerPrefs.Save();
 
+        narratorAudioSource.Stop();
+
         if (!isNarratorEnabled)
         {
-            narratorAudioSource.Stop();
+            // Play directly on the source so it ignores the isNarratorEnabled check!
+            if (narratorToggleOffClip != null) narratorAudioSource.PlayOneShot(narratorToggleOffClip);
         }
         else
         {
@@ -70,9 +68,7 @@ public class Narrator : MonoBehaviour
 
     public void Speak(AudioClip clip)
     {
-        // Don't play if the narrator is turned off or the clip is missing
         if (!isNarratorEnabled || clip == null) return;
-
         narratorAudioSource.Stop();
         narratorAudioSource.PlayOneShot(clip);
     }

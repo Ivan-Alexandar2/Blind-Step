@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 2163664939038088896}
   - component: {fileID: 7544696717962059503}
   - component: {fileID: 3246698579123580760}
+  - component: {fileID: 8130464769106906841}
   - component: {fileID: 2647279757386427639}
-  - component: {fileID: 141774860486723573}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -62,9 +62,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VictoryManager
   victoryPanel: {fileID: 0}
-  victoryAudioSource: {fileID: 141774860486723573}
-  victoryVoiceLine: {fileID: 0}
-  victorySoundEffect: {fileID: 8300000, guid: 0a8be0b858d31bd49adafdfe762963ea, type: 3}
+  victoryAudioSource: {fileID: 0}
+  narrator: {fileID: 0}
   sceneFader: {fileID: 3246698579123580760}
   buttonPressAudio: {fileID: 0}
 --- !u!114 &3246698579123580760
@@ -81,6 +80,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SceneFader
   fadeImage: {fileID: 0}
   fadeSpeed: 0.3
+--- !u!114 &8130464769106906841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8295548115166785813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a323856a763936641b272beb266efec8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PauseMenu
+  pausePanel: {fileID: 0}
+  settingsPanel: {fileID: 0}
+  pauseIntroClip: {fileID: 8300000, guid: 006e986051d99a2419dced9e8fa7acb4, type: 3}
+  pauseOutroClip: {fileID: 8300000, guid: 07194d506f4c7bd4f90041572ff5822d, type: 3}
+  settingsIntroClip: {fileID: 8300000, guid: ea2a6d3e8c3b76248825a0047c42b04d, type: 3}
+  settingsList:
+  - settingName: Ambience
+    prefsKey: AmbienceVol
+    currentVolume: 0.5
+    spokenNameClip: {fileID: 8300000, guid: f6bbf5b45983b3942abddc918e2cf829, type: 3}
+    uiNumberText: {fileID: 0}
+    highlightBox: {fileID: 0}
+  - settingName: SFX
+    prefsKey: SFXVol
+    currentVolume: 1
+    spokenNameClip: {fileID: 8300000, guid: 271abe7fdd185a9419bdd18e870780e2, type: 3}
+    uiNumberText: {fileID: 0}
+    highlightBox: {fileID: 0}
 --- !u!82 &2647279757386427639
 AudioSource:
   m_ObjectHideFlags: 0
@@ -97,103 +126,6 @@ AudioSource:
   m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!82 &141774860486723573
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8295548115166785813}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 0a8be0b858d31bd49adafdfe762963ea, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 0.208
-  m_Pitch: 1
-  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
