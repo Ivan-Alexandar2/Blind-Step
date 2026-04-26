@@ -1562,7 +1562,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneFader
   fadeImage: {fileID: 1030375417}
-  fadeSpeed: 0.5
+  fadeSpeed: 0.3
+  isFading: 0
 --- !u!4 &1789133365
 Transform:
   m_ObjectHideFlags: 0

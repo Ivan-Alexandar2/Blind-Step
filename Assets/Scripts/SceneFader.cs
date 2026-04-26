@@ -11,6 +11,7 @@ public class SceneFader : MonoBehaviour
 
     [Header("Settings")]
     public float fadeSpeed = 3f;
+    public bool isFading;
 
     void Start()
     {
@@ -38,6 +39,7 @@ public class SceneFader : MonoBehaviour
 
     private IEnumerator FadeIn()
     {
+        isFading = true;
         Color fadeColor = fadeImage.color;
         fadeColor.a = 1f;
         fadeImage.color = fadeColor;
@@ -51,11 +53,13 @@ public class SceneFader : MonoBehaviour
         }
 
         fadeImage.raycastTarget = false;
+        isFading = false;
     }
 
     // Notice the 'Action onComplete' parameter
     private IEnumerator FadeOut(Action onComplete)
     {
+        isFading = true;
         fadeImage.raycastTarget = true;
         Color fadeColor = fadeImage.color;
 
@@ -71,6 +75,7 @@ public class SceneFader : MonoBehaviour
         Time.timeScale = 1f;
 
         // Execute whatever action we passed in!
+        isFading = false;
         onComplete?.Invoke();
     }
 }

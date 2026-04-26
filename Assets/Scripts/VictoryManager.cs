@@ -13,8 +13,12 @@ public class VictoryManager : MonoBehaviour
     public SceneFader sceneFader;
     public AudioSource buttonPressAudio;
 
+    public static VictoryManager Instance;
+    public bool isLoading;
+
     void Start()
     {
+        Instance = this;
         victoryPanel = GameObject.Find("VictoryPanel");
         if (victoryPanel != null) victoryPanel.SetActive(false);
 
@@ -29,11 +33,11 @@ public class VictoryManager : MonoBehaviour
     {
         if(victoryPanel.active)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
+            if (Input.GetKeyDown(KeyCode.Alpha1) && !isLoading)
                 LoadNextLevel();
-            if (Input.GetKeyDown(KeyCode.Alpha2))
+            if (Input.GetKeyDown(KeyCode.Alpha2) && !isLoading)
                 RestartLevel();
-            if (Input.GetKeyDown(KeyCode.Alpha3))
+            if (Input.GetKeyDown(KeyCode.Alpha3) && !isLoading)
                 QuitGame();
         }     
     }
@@ -52,12 +56,14 @@ public class VictoryManager : MonoBehaviour
     public void LoadNextLevel()
     {
         buttonPressAudio.Play();
+        isLoading = true;
         if (sceneFader != null) sceneFader.FadeToScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void RestartLevel()
     {
         buttonPressAudio.Play();
+        isLoading = true;
         if (sceneFader != null) sceneFader.FadeToScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -65,6 +71,7 @@ public class VictoryManager : MonoBehaviour
     {
         Debug.Log("Quitting Game...");
         buttonPressAudio.Play();
+        isLoading = true;
         if (sceneFader != null) sceneFader.FadeToQuit();
     }
 }

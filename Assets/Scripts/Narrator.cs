@@ -32,7 +32,7 @@ public class Narrator : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.N))
+        if (Input.GetKeyDown(KeyCode.K))
         {
             ToggleNarrator();
         }

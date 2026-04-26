@@ -6,7 +6,7 @@ public class EntryScene : MonoBehaviour
     public SceneFader fader;
     void Start()
     {
-        fader = FindObjectOfType<SceneFader>();
+        //fader = FindObjectOfType<SceneFader>();
         StartCoroutine(EntryCoroutine());
     }
 

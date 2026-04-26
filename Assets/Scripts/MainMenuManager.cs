@@ -21,11 +21,11 @@ public class MainMenuManager : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        if(Input.GetKeyDown(KeyCode.Alpha1) && !sceneFader.isFading)
         {
             StartClassicMode();
         }
-        if(Input.GetKeyDown(KeyCode.Alpha2))
+        if(Input.GetKeyDown(KeyCode.Alpha2) && !sceneFader.isFading)
         {
             Application.Quit();
         }

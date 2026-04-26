@@ -60,6 +60,11 @@ public class PauseMenu : MonoBehaviour
                 HandleSettingsInput();
                 break;
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3) && currentState == MenuState.Paused)
+        {
+            VictoryManager.Instance.QuitGame();
+        }
     }
 
     // --- PAUSE MENU ---
